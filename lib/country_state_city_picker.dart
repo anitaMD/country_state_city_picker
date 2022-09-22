@@ -39,9 +39,9 @@ class SelectState extends StatefulWidget {
 }
 
 class _SelectStateState extends State<SelectState> {
-  List<String> _cities = ["Choose City"];
+  List<String> _cities = ["Choose YOUR City"];
   List<String> _country = ["Choose Country"];
-  String _selectedCity = "Choose City";
+  String _selectedCity = "Choose YOUR City";
   String _selectedCountry = "Choose Country";
   String _selectedState = "Choose State/Province";
   List<String> _states = ["Choose State/Province"];
@@ -137,7 +137,7 @@ class _SelectStateState extends State<SelectState> {
   void _onSelectedState(String value) {
     if (!mounted) return;
     setState(() {
-      _selectedCity = "Choose City";
+      _selectedCity = "Choose City"; //shows this after choosing a state
       _cities = ["Choose City"];
       _selectedState = value;
       this.widget.onStateChanged(value);
