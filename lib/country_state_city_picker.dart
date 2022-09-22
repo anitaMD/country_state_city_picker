@@ -39,12 +39,13 @@ class SelectState extends StatefulWidget {
 }
 
 class _SelectStateState extends State<SelectState> {
-  List<String> _cities = ["Choose YOUR City"];
-  List<String> _country = ["Choose Country"];
-  String _selectedCity = "Choose YOUR City";
-  String _selectedCountry = "Choose Country";
-  String _selectedState = "Choose State/Province";
-  List<String> _states = ["Choose State/Province"];
+  List<String> _cities = ["Select Reg. City"];
+  List<String> _country = ["Select Reg. Country"];
+  List<String> _states = ["Select Reg. State/Province"];
+
+  String _selectedCity = "Select Reg. City";
+  String _selectedCountry = "Select Reg. Country";
+  String _selectedState = "Select Reg. State/Province";
   var responses;
 
   @override
@@ -126,8 +127,8 @@ class _SelectStateState extends State<SelectState> {
   void _onSelectedCountry(String value) {
     if (!mounted) return;
     setState(() {
-      _selectedState = "Choose  State/Province";
-      _states = ["Choose  State/Province"];
+      _selectedState = "Select Reg. State/Province";
+      _states = ["Select Reg. State/Province"];
       _selectedCountry = value;
       this.widget.onCountryChanged(value);
       getState();
@@ -137,8 +138,8 @@ class _SelectStateState extends State<SelectState> {
   void _onSelectedState(String value) {
     if (!mounted) return;
     setState(() {
-      _selectedCity = "Choose City"; //shows this after choosing a state
-      _cities = ["Choose City"];
+      _selectedCity = "Select Reg. City"; //shows this after choosing a state
+      _cities = ["Select Reg. City"];
       _selectedState = value;
       this.widget.onStateChanged(value);
       getCity();
@@ -172,7 +173,7 @@ class _SelectStateState extends State<SelectState> {
                     Flexible(
                       child: Text(
                         dropDownStringItem,
-                        style: widget.style,
+                        //style: widget.style,
                         overflow: TextOverflow.ellipsis,
                       ),
                     )
