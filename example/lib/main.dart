@@ -30,6 +30,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String? countryValue;
   String? stateValue;
   String? cityValue;
+  int totalStates = 0, totalCities = 0;
 
   void displayMsg(msg) {
     print(msg);
@@ -72,6 +73,18 @@ class _MyHomePageState extends State<MyHomePage> {
                   });
                 },
                 onCityTap: () => displayMsg('You\'ve tapped on cities!'),
+                onCityLengthChanged: (int value) {
+                  setState(() {
+                    totalCities = value;
+                    print("TOTAL CITIES: $totalCities");
+                  });
+                },
+                onStateLengthChanged: (int value) {
+                  setState(() {
+                    totalStates = value;
+                    print("TOTAL STATES: $totalStates");
+                  });
+                },
               ),
               // InkWell(
               //     onTap: () {
