@@ -233,7 +233,8 @@ class _SelectStateState extends State<SelectState> {
             value: _selectedStateOrCity,
           )),
         ),
-        SizedBox(
+        
+        /*SizedBox(
           height: widget.spacing,
         ),
         InputDecorator(
@@ -262,7 +263,7 @@ class _SelectStateState extends State<SelectState> {
             onTap: widget.onCityTap,
             value: _selectedCityOrDepartment,
           )),
-        ),
+        ),*/
       ],
     );
   }
