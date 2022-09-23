@@ -59,30 +59,33 @@ class _MyHomePageState extends State<MyHomePage> {
                   setState(() {
                     countryValue = value;
                   });
+                  print("SELECTED COUNTRY: $countryValue");
                 },
                 onCountryTap: () => displayMsg('You\'ve tapped on countries!'),
                 onStateChanged: (value) {
                   setState(() {
                     stateValue = value;
                   });
+                  print("SELECTED STATE: $stateValue");
                 },
                 onStateTap: () => displayMsg('You\'ve tapped on states!'),
                 onCityChanged: (value) {
                   setState(() {
                     cityValue = value;
                   });
+                  print("SELECTED city: $cityValue");
                 },
                 onCityTap: () => displayMsg('You\'ve tapped on cities!'),
                 onCityLengthChanged: (int value) {
                   setState(() {
                     totalCities = value;
-                    print("TOTAL CITIES: $totalCities");
+                    print("TOTAL CITIES OR DEPARTMENT: $totalCities");
                   });
                 },
                 onStateLengthChanged: (int value) {
                   setState(() {
                     totalStates = value;
-                    print("TOTAL STATES: $totalStates");
+                    print("TOTAL STATES/REGIONSORCITY: $totalStates");
                   });
                 },
               ),

@@ -43,13 +43,14 @@ class SelectState extends StatefulWidget {
 }
 
 class _SelectStateState extends State<SelectState> {
-  List<String> _cities = ["Select Reg. City"];
+  List<String> _citiesOrDepartments = ["Select Reg. City/Department"];
   List<String> _country = ["Select Reg. Country"];
-  List<String> _states = ["Select Reg. State/Province"];
+  List<String> _statesOrCities = ["Select Reg. State/City"];
 
-  String _selectedCity = "Select Reg. City";
+  String _selectedCityOrDepartment =
+      "Select Reg. City/Department"; //example city if it's the USA and department for SN
   String _selectedCountry = "Select Reg. Country";
-  String _selectedState = "Select Reg. State/Province";
+  String _selectedStateOrCity = "Select Reg. State/City";
   var responses;
   int allCountries = 0, allStatesProvinces = 0, allCities = 0;
 
@@ -81,7 +82,7 @@ class _SelectStateState extends State<SelectState> {
     return _country;
   }
 
-  Future getState() async {
+  Future getStateOrCity() async {
     var response = await getResponse();
     var takestate = response
         .map((map) => StatusModel.StatusModel.fromJson(map))
@@ -96,19 +97,19 @@ class _SelectStateState extends State<SelectState> {
         var name = f.map((item) => item.name).toList();
         allStatesProvinces = name.length;
         this.widget.onStateLengthChanged(allStatesProvinces);
-        print("allStatesProvinces NO DROPDOWN ${name.length}");
+        print("allStates or Cities NO DROPDOWN ${name.length}");
         for (var statename in name) {
           print(statename.toString());
 
-          _states.add(statename.toString());
+          _statesOrCities.add(statename.toString());
         }
       });
     });
 
-    return _states;
+    return _statesOrCities;
   }
 
-  Future getCity() async {
+  Future getCityOrDepartment() async {
     var response = await getResponse();
     var takestate = response
         .map((map) => StatusModel.StatusModel.fromJson(map))
@@ -117,7 +118,7 @@ class _SelectStateState extends State<SelectState> {
         .toList();
     var states = takestate as List;
     states.forEach((f) {
-      var name = f.where((item) => item.name == _selectedState);
+      var name = f.where((item) => item.name == _selectedStateOrCity);
       var cityname = name.map((item) => item.city).toList();
       cityname.forEach((ci) {
         if (!mounted) return;
@@ -125,44 +126,45 @@ class _SelectStateState extends State<SelectState> {
           var citiesname = ci.map((item) => item.name).toList();
           allCities = citiesname.length;
           this.widget.onStateLengthChanged(allCities);
-          print("allCities NO DROPDOWN ${allCities}");
+          print("allCities/Departments NO DROPDOWN ${allCities}");
           for (var citynames in citiesname) {
             print(citynames.toString());
 
-            _cities.add(citynames.toString());
+            _citiesOrDepartments.add(citynames.toString());
           }
         });
       });
     });
-    return _cities;
+    return _citiesOrDepartments;
   }
 
   void _onSelectedCountry(String value) {
     if (!mounted) return;
     setState(() {
-      _selectedState = "Select Reg. State/Province";
-      _states = ["Select Reg. State/Province"];
+      _selectedStateOrCity = "Select Reg. State/City";
+      _statesOrCities = ["Select Reg. State/City"];
       _selectedCountry = value;
       this.widget.onCountryChanged(value);
-      getState();
+      getStateOrCity();
     });
   }
 
   void _onSelectedState(String value) {
     if (!mounted) return;
     setState(() {
-      _selectedCity = "Select Reg. City"; //shows this after choosing a state
-      _cities = ["Select Reg. City"];
-      _selectedState = value;
+      _selectedCityOrDepartment =
+          "Select Reg. City/Department"; //shows this after choosing a state
+      _citiesOrDepartments = ["Select Reg. City/Department"];
+      _selectedStateOrCity = value;
       this.widget.onStateChanged(value);
-      getCity();
+      getCityOrDepartment();
     });
   }
 
   void _onSelectedCity(String value) {
     if (!mounted) return;
     setState(() {
-      _selectedCity = value;
+      _selectedCityOrDepartment = value;
       this.widget.onCityChanged(value);
     });
   }
@@ -210,7 +212,7 @@ class _SelectStateState extends State<SelectState> {
               child: DropdownButton<String>(
             dropdownColor: widget.dropdownColor,
             isExpanded: true,
-            items: _states.map((String dropDownStringItem) {
+            items: _statesOrCities.map((String dropDownStringItem) {
               return DropdownMenuItem<String>(
                 value: dropDownStringItem,
                 child: Row(
@@ -228,7 +230,7 @@ class _SelectStateState extends State<SelectState> {
             }).toList(),
             onChanged: (value) => _onSelectedState(value!),
             onTap: widget.onStateTap,
-            value: _selectedState,
+            value: _selectedStateOrCity,
           )),
         ),
         SizedBox(
@@ -240,7 +242,7 @@ class _SelectStateState extends State<SelectState> {
               child: DropdownButton<String>(
             dropdownColor: widget.dropdownColor,
             isExpanded: true,
-            items: _cities.map((String dropDownStringItem) {
+            items: _citiesOrDepartments.map((String dropDownStringItem) {
               return DropdownMenuItem<String>(
                 value: dropDownStringItem,
                 child: Row(
@@ -258,7 +260,7 @@ class _SelectStateState extends State<SelectState> {
             }).toList(),
             onChanged: (value) => _onSelectedCity(value!),
             onTap: widget.onCityTap,
-            value: _selectedCity,
+            value: _selectedCityOrDepartment,
           )),
         ),
       ],
