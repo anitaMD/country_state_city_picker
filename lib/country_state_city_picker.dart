@@ -18,25 +18,25 @@ class SelectState extends StatefulWidget {
   final Color? dropdownColor;
   final InputDecoration decoration;
   final double spacing;
-  final List<int> allCountries, allStatesAndProvinces, allCities;
+  String allCountries, allStatesProvinces, allCities;
 
-  const SelectState(
-      {Key? key,
-      required this.onCountryChanged,
-      required this.onStateChanged,
-      required this.onCityChanged,
-      this.allCountries = const [0],
-      this.allStatesAndProvinces = const [0],
-      this.allCities = const [0],
-      this.decoration =
-          const InputDecoration(contentPadding: EdgeInsets.all(0.0)),
-      this.spacing = 0.0,
-      this.style,
-      this.dropdownColor,
-      this.onCountryTap,
-      this.onStateTap,
-      this.onCityTap})
-      : super(key: key);
+  SelectState({
+    Key? key,
+    required this.onCountryChanged,
+    required this.onCityChanged,
+    required this.onStateChanged,
+    this.allCities = '',
+    this.allCountries = '',
+    this.allStatesProvinces = '',
+    this.decoration =
+        const InputDecoration(contentPadding: EdgeInsets.all(0.0)),
+    this.spacing = 0.0,
+    this.style,
+    this.dropdownColor,
+    this.onCountryTap,
+    this.onStateTap,
+    this.onCityTap,
+  }) : super(key: key);
 
   @override
   _SelectStateState createState() => _SelectStateState();
@@ -66,8 +66,7 @@ class _SelectStateState extends State<SelectState> {
 
   Future getCounty() async {
     var countryres = await getResponse() as List;
-    widget.allCountries.clear();
-    widget.allCountries.add(countryres.length);
+    widget.allCountries = countryres.length.toString();
     countryres.forEach((data) {
       var model = StatusModel.StatusModel();
       model.name = data['name'];
@@ -94,8 +93,7 @@ class _SelectStateState extends State<SelectState> {
       if (!mounted) return;
       setState(() {
         var name = f.map((item) => item.name).toList();
-        widget.allStatesAndProvinces.clear();
-        widget.allStatesAndProvinces.add(name.length);
+        widget.allStatesProvinces = name.length.toString();
         for (var statename in name) {
           print(statename.toString());
 
@@ -122,8 +120,8 @@ class _SelectStateState extends State<SelectState> {
         if (!mounted) return;
         setState(() {
           var citiesname = ci.map((item) => item.name).toList();
-          widget.allCities.clear();
-          widget.allCities.add(citiesname.length);
+
+          widget.allCities = citiesname.length.toString();
           for (var citynames in citiesname) {
             print(citynames.toString());
 
